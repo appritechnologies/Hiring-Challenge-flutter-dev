@@ -54,6 +54,6 @@ Your submission will be evaluated based on the following criteria:
 
 ## Important Note
 
-Please respect the two-day deadline for this challenge. Late submissions will not be considered.
+Please respect the two-day deadline for this challenge.
 
 Good luck with the challenge! We look forward to reviewing your work and potentially having you join our team as a software engineering intern. If you have any questions or need clarifications, feel free to reach out to us. Happy coding!
