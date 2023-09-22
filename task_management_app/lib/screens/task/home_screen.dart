@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/widgets/task_list_card.dart';
 
 import 'package:task_management_app/utils/constraints.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/task_list_view_model.dart';
-
-import '../../widgets/todo_list_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,17 +18,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Provider.of<TaskListViewModel>(context, listen: false).getAllTasks();
-    // The rest of your initialization code
+    Provider.of<TaskListViewModel>(context, listen: false)
+        .getAllTasks(isDone: false);
   }
 
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TaskListViewModel>(context);
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -39,11 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           "Home",
-          style: TextStyle(color: kPrimaryButtonColor),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding:
+            EdgeInsets.only(left: size.width * 0.03, right: size.width * 0.03),
         child: Column(
           children: [
             Row(
@@ -55,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(child: _updateUi(vm)),
             SizedBox(
-              height: screenHeight * 0.1,
+              height: size.height * 0.1,
             )
           ],
         ),
@@ -71,11 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Lottie.asset(loadingAnim, width: 200, height: 200),
         );
       case Status.success:
-        return TodoListCard(
-            function: (taskId) async {
-              print(taskId);
-            },
-            tasks: vm.tasks);
+        return TaskListCard(tasks: vm.tasks);
       case Status.empty:
         return Align(
           alignment: Alignment.center,

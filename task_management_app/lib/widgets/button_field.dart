@@ -43,8 +43,8 @@ class ButtonField extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
+            backgroundColor: color,
             elevation: 2.0,
-            primary: color,
             padding: EdgeInsets.only(
                 left: pleft, right: pright, top: ptop, bottom: pbottom)),
       ),

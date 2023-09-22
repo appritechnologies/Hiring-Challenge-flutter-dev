@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -43,7 +41,7 @@ class StartState extends State<SplashScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: Container(
+        body: SizedBox(
       width: size.width,
       height: size.height,
       child: Column(
@@ -51,29 +49,41 @@ class StartState extends State<SplashScreen> {
           SizedBox(
             height: size.height * 0.2,
           ),
-          Padding(
-              padding: EdgeInsets.only(
-                  top: size.width * 0.1,
-                  left: size.width * 0.1,
-                  right: size.width * 0.1),
-              child: Image.asset(
-                logo,
-                scale: 7,
-              )),
-          Text(
-            "Task Minder",
-            style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+          Icon(
+            Icons.task_alt_outlined,
+            color: kPrimaryButtonColor,
+            size: 300,
           ),
-          Lottie.asset(loadingAnim, width: 50, height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Task",
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: size.width * 0.05,
+              ),
+              Text(
+                "Minder",
+                style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryButtonColor),
+              ),
+            ],
+          ),
+          Lottie.asset(loadingAnim,
+              width: size.width * 0.3, height: size.width * 0.3),
           SizedBox(
-            height: size.height * 0.22,
+            height: size.height * 0.2,
           ),
           Text(
             "Copyright 2023 © Task Minder ",
             style: TextStyle(
-              fontSize: size.width * 0.035,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.white.withOpacity(0.6),
+              color: kPrimaryButtonColor,
             ),
           ),
         ],

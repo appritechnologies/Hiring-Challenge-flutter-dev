@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task_management_app/models/task_model.dart';
 import 'package:task_management_app/screens/intro/splash_screen.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/add_task_view_model.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/task_list_view_model.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,13 +20,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

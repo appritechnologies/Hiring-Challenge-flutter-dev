@@ -6,6 +6,8 @@ class TaskViewModel extends ChangeNotifier {
 
   TaskViewModel({required this.taskModel});
 
+  int get key => taskModel.key;
+
   String get title => taskModel.title;
 
   String get description => taskModel.description;

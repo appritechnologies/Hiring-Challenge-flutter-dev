@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_app/utils/constraints.dart';
+import 'package:task_management_app/utils/navigation.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/task_view_model.dart';
 
-class TodoListCard extends StatefulWidget {
+class TaskListCard extends StatefulWidget {
   final List<TaskViewModel> tasks;
-  final Function(String) function;
+
   final DateTime? selectedDay;
-  TodoListCard(
-      {Key? key, required this.function, this.selectedDay, required this.tasks})
+  const TaskListCard({Key? key, this.selectedDay, required this.tasks})
       : super(key: key);
 
   @override
-  State<TodoListCard> createState() => _TodoListCardState();
+  State<TaskListCard> createState() => _TaskListCardState();
 }
 
-class _TodoListCardState extends State<TodoListCard> {
+class _TaskListCardState extends State<TaskListCard> {
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
 
     return ListView.builder(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         shrinkWrap: true,
         itemCount: widget.tasks.length,
         itemBuilder: (context, index) {
           final task = widget.tasks[index];
 
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              openTask(context, task);
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -35,26 +38,31 @@ class _TodoListCardState extends State<TodoListCard> {
                         Convert.getDate(date: widget.tasks[index - 1].date))
                   ...[]
                 else ...[
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 5, left: 10),
-                      child: SizedBox(
-                        width: screenWidth * 0.4,
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                Convert.getDate(date: task.date),
+                  Padding(
+                    padding: EdgeInsets.only(top: size.height * 0.02),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.03,
+                            vertical: size.height * 0.01),
+                        child: SizedBox(
+                          width: size.width * 0.4,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  Convert.getDate(date: task.date),
+                                ),
+                                flex: 1,
                               ),
-                              flex: 1,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Icon(Icons.keyboard_arrow_down_outlined)
-                          ],
+                              SizedBox(
+                                width: size.width * 0.01,
+                              ),
+                              Icon(Icons.keyboard_arrow_down_outlined)
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -62,7 +70,9 @@ class _TodoListCardState extends State<TodoListCard> {
                 ],
                 Card(
                     child: Padding(
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.height * 0.01,
+                      horizontal: size.width * 0.05),
                   child: Column(
                     children: [
                       Row(
@@ -79,7 +89,7 @@ class _TodoListCardState extends State<TodoListCard> {
                                 height: 10,
                               ),
                               SizedBox(
-                                width: screenWidth * 0.35,
+                                width: size.width * 0.35,
                                 child: Wrap(
                                   alignment: WrapAlignment.center,
                                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -116,7 +126,7 @@ class _TodoListCardState extends State<TodoListCard> {
                                         ? "Completed"
                                         : "Not Complete",
                                     style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 13,
                                         color: task.isDone == true
                                             ? Colors.green
                                             : kPrimaryErrorColor),
@@ -124,32 +134,36 @@ class _TodoListCardState extends State<TodoListCard> {
                                 ),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: size.height * 0.01,
                               ),
                               Row(
                                 children: [
                                   Row(
                                     children: [
                                       SizedBox(
-                                        width: 10,
+                                        width: size.width * 0.01,
                                       ),
                                       Container(
                                         padding: EdgeInsets.all(3),
                                         decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: Colors.black, width: 1)),
                                         child: Row(
                                           children: [
-                                            Icon(Icons.flag_outlined),
-                                            SizedBox(
-                                              width: 10,
+                                            Icon(
+                                              Icons.flag_outlined,
+                                              color: Colors.black,
                                             ),
-                                            Text(task.priority.toString())
+                                            SizedBox(
+                                              width: size.width * 0.01,
+                                            ),
+                                            Text(
+                                              task.priority.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            )
                                           ],
                                         ),
                                       )

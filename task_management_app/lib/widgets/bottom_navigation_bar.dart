@@ -3,9 +3,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import "package:task_management_app/utils/constraints.dart";
 import 'package:task_management_app/screens/Task/home_screen.dart';
+import 'package:task_management_app/screens/Task/task_list.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/add_task_view_model.dart';
 import 'package:task_management_app/view%20models/task%20view%20models/task_list_view_model.dart';
 import "package:task_management_app/widgets/text_field.dart";
+import "package:task_management_app/widgets/toggle_button.dart";
 import "package:task_management_app/services/validator/validate_handeler.dart";
 import 'package:provider/provider.dart';
 
@@ -18,9 +20,9 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 1;
-  late DateTime _selectedDate;
-  late TimeOfDay _timeOfDay;
+  int _currentIndex = 0;
+  DateTime? _selectedDate;
+  String? priority;
   final List<Widget> _screens = [];
 
   TextEditingController titleController = TextEditingController();
@@ -28,8 +30,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final _form = GlobalKey<FormState>();
   late AddTaskViewModel addTaskViewModel;
   late TaskListViewModel taskListViewModel;
-
-  bool isSelected = false;
+  List<String> toggleButtonOptions = ['LOW', 'MEDIUAM', 'HIGH'];
+  List<bool> isSelectedOptions = [false, false, false];
   final FocusNode _focusNode = FocusNode();
   @override
   void dispose() {
@@ -49,8 +51,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     _screens.addAll([
       HomeScreen(),
       HomeScreen(),
-      HomeScreen(),
-      HomeScreen(),
+      TaskListScreen(),
     ]);
   }
 
@@ -99,8 +100,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
+                  icon: Icon(Icons.task_alt_rounded),
+                  label: 'All Tasks',
                 ),
               ],
             ),
@@ -111,6 +112,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   void _showAddModal(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -153,6 +155,29 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     },
                     save: (value) {},
                     controller: descriptionController,
+                  ),
+                  Text(
+                    "Add Task",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.02,
+                  ),
+                  ToggleBtn(
+                    isSelectedOptions: isSelectedOptions,
+                    onSelect: (index) {
+                      setState(() {
+                        for (int buttonIndex = 0;
+                            buttonIndex < isSelectedOptions.length;
+                            buttonIndex++) {
+                          isSelectedOptions[buttonIndex] =
+                              (buttonIndex == index);
+                        }
+                        priority = toggleButtonOptions[
+                            index]; // Update priority based on the clicked index
+                      });
+                    },
+                    toggleButtonOptions: toggleButtonOptions,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,16 +237,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   _addTodo() async {
+    if (_selectedDate == null) {
+      Fluttertoast.showToast(msg: 'Please select a date');
+      return;
+    }
+    if (priority == null) {
+      Fluttertoast.showToast(msg: 'Please select priority');
+      return;
+    }
+
     if (_form.currentState!.validate()) {
       addTaskViewModel.title = titleController.text;
       addTaskViewModel.description = descriptionController.text;
-      addTaskViewModel.date = _selectedDate;
+      addTaskViewModel.date = _selectedDate!;
       addTaskViewModel.isDone = false;
-      addTaskViewModel.priority = "HIGH";
+      addTaskViewModel.priority = priority.toString();
       await addTaskViewModel.addTodo();
-      await taskListViewModel.getAllTasks().whenComplete(() =>
+      await taskListViewModel.getAllTasks(isDone: false).whenComplete(() =>
           Fluttertoast.showToast(msg: 'Task added Successfully')
               .whenComplete(() => Navigator.pop(context)));
+      titleController.clear();
+      descriptionController.clear();
     }
   }
 }
