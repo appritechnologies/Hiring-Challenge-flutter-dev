@@ -86,7 +86,7 @@ class _TaskListCardState extends State<TaskListCard> {
                                 style: TextStyle(fontSize: 20),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: size.height * 0.01,
                               ),
                               SizedBox(
                                 width: size.width * 0.35,

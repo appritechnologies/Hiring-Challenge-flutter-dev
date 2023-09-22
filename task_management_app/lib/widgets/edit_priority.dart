@@ -26,6 +26,7 @@ class _EditPriorityState extends State<EditPriority> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.05, vertical: size.height * 0.03),

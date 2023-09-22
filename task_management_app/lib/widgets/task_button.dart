@@ -20,6 +20,7 @@ class TaskRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -27,7 +28,7 @@ class TaskRow extends StatelessWidget {
           children: [
             Icon(topicIcon),
             SizedBox(
-              width: 10,
+              width: size.width * 0.01,
             ),
             Text("$topic:")
           ],
@@ -41,8 +42,9 @@ class TaskRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: kPrimaryTileColor),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.02,
+                    vertical: size.height * 0.015),
                 child: Row(
                   children: [
                     if (btnIcon != null) ...[
@@ -50,9 +52,7 @@ class TaskRow extends StatelessWidget {
                         btnIcon,
                         color: Colors.white,
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: size.width * 0.01),
                     ],
                     Text(
                       text,

@@ -22,21 +22,27 @@ class _EditTaskDialogState extends State<EditTaskDialog> {
   bool isSelected = false;
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SizedBox(
-          height: 250,
+          height: size.height * 0.33,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(alignment: Alignment.center, child: Text("Edit Task ")),
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Edit Task",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  )),
               Divider(
                 thickness: 1,
               ),
               SizedBox(
-                height: 10,
+                height: size.height * 0.01,
               ),
               if (!isSelected) ...[
                 TextFieldWidget(
@@ -58,7 +64,7 @@ class _EditTaskDialogState extends State<EditTaskDialog> {
                     ))
               ],
               SizedBox(
-                height: 10,
+                height: size.height * 0.01,
               ),
               if (isSelected) ...[
                 TextFieldWidget(
@@ -69,7 +75,7 @@ class _EditTaskDialogState extends State<EditTaskDialog> {
                     controller: widget.descriptionController)
               ] else ...[
                 SizedBox(
-                  height: 10,
+                  height: size.height * 0.01,
                 ),
                 InkWell(
                     onTap: () {
@@ -83,7 +89,7 @@ class _EditTaskDialogState extends State<EditTaskDialog> {
                     ))
               ],
               SizedBox(
-                height: 10,
+                height: size.height * 0.01,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,8 +111,8 @@ class _EditTaskDialogState extends State<EditTaskDialog> {
                       Navigator.pop(context);
                     },
                     text: "Edit",
-                    pright: screenWidth * 0.15,
-                    pleft: screenWidth * 0.15,
+                    pright: size.width * 0.15,
+                    pleft: size.width * 0.15,
                   )
                 ],
               )

@@ -45,7 +45,7 @@ class _TaskDeleteDialogState extends State<TaskDeleteDialog> {
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(
-                height: 5,
+                height: size.height * 0.01,
               ),
               Text(
                 "Task title: ${widget.title}",

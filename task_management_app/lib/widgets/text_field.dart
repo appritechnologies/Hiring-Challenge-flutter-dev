@@ -29,8 +29,9 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
       child: TextFormField(
         focusNode: focusNode,
         autofocus: false,
@@ -62,8 +63,8 @@ class TextFieldWidget extends StatelessWidget {
             style: TextStyle(
                 fontWeight: FontWeight.w400, fontSize: 20, color: Colors.black),
           ),
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.03, vertical: size.height * 0.025),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),

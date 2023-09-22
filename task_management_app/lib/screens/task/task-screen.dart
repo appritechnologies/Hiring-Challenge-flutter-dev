@@ -10,6 +10,7 @@ import 'package:task_management_app/widgets/button_field.dart';
 import 'package:task_management_app/widgets/task_button.dart';
 import 'package:task_management_app/widgets/edit_task_dialog.dart';
 import 'package:task_management_app/widgets/edit_priority.dart';
+
 import 'package:task_management_app/widgets/task_delete_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _TaskScreenState extends State<TaskScreen> {
   String? priority;
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
     final task = widget.taskModel;
 
     return Scaffold(
@@ -69,7 +70,10 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
       body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.03,
+            vertical: size.height * 0.01,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -89,7 +93,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                     fontWeight: FontWeight.w500, fontSize: 20),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: size.height * 0.02,
                               ),
                               Text(
                                 Convert.upperCase(
@@ -128,7 +132,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 30,
+                    height: size.height * 0.03,
                   ),
                   TaskRow(
                       function: () {
@@ -138,7 +142,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       topicIcon: Icons.calendar_month_outlined,
                       topic: "Task Date"),
                   SizedBox(
-                    height: 30,
+                    height: size.height * 0.03,
                   ),
                   TaskRow(
                       function: () {
@@ -172,7 +176,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       topicIcon: Icons.flag_outlined,
                       topic: "Task Priority"),
                   SizedBox(
-                    height: 30,
+                    height: size.height * 0.03,
                   ),
                   TaskRow(
                       function: () {
@@ -195,7 +199,7 @@ class _TaskScreenState extends State<TaskScreen> {
                           : Colors.green,
                       topic: "Task Complete"),
                   SizedBox(
-                    height: 30,
+                    height: size.height * 0.02,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -260,11 +264,11 @@ class _TaskScreenState extends State<TaskScreen> {
                           .whenComplete(() => Navigator.pop(context));
                     },
                     text: "Edit Task",
-                    pleft: screenWidth * 0.3,
-                    pright: screenWidth * 0.3,
+                    pleft: size.width * 0.3,
+                    pright: size.width * 0.3,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: size.height * 0.02,
                   )
                 ],
               )

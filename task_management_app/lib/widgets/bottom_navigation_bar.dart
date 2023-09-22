@@ -57,6 +57,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -116,15 +117,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
     showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
       ),
       context: context,
       builder: (BuildContext context) {
         return Padding(
           padding: EdgeInsets.only(
-            left: 30,
-            top: 20,
-            right: 20,
+            left: size.width * 0.05,
+            top: size.height * 0.02,
+            right: size.width * 0.05,
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Form(
