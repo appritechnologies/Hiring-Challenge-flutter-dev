@@ -1,4 +1,4 @@
-# Task Management App
+# Task Minder
 
 This Flutter mobile application is a simple task management app. It helps you organize and keep track of your tasks efficiently.
 
